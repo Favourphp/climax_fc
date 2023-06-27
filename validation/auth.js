@@ -1,6 +1,6 @@
 const { check } = require('express-validator');
 
-const validateRegisterInput = () => [
+const validateSignupInput = () => [
   check('name', 'Name is required')
     .not()
     .isEmpty(),
@@ -16,4 +16,4 @@ const validateLoginInput = () => [
   check('password', 'Password is required').exists()
 ];
 
-module.exports = { validateRegisterInput, validateLoginInput };
+module.exports = { validateSignupInput, validateLoginInput };

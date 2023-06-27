@@ -2,12 +2,11 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const config = require("config");
-const auth = require("../../middleware/auth");
 const { validationResult } = require("express-validator");
 
 // Load input validation
 const {
-  validateRegisterInput,
+  validateSignupInput,
   validateLoginInput,
 } = require("../../validation/auth");
 
@@ -17,7 +16,7 @@ const User = require("../../models/User");
 // @route POST api/users/register
 // @desc Register user
 // @access Public
-router.post("/register", validateRegisterInput(), async (req, res) => {
+router.post("/register", validateSignupInput(), async (req, res) => {
   // Check validation
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -113,7 +112,7 @@ router.post("/login", validateLoginInput(), async (req, res) => {
 // @route    GET api/users/current
 // @desc     Get user by token
 // @access   Private
-router.get("/current", auth, async (req, res) => {
+router.get("/current", async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
     res.json(user);

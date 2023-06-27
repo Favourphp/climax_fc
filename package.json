@@ -4,17 +4,18 @@
   "description": "climax",
   "main": "server.js",
   "scripts": {
-    "client-install": "npm install --prefix client",
+    "investors-install": "npm install --prefix investors",
     "start": "node server.js",
-    "heroku-postbuild": "cd client && npm install && npm run build",
+    "heroku-postbuild": "cd investors && npm install && npm run build",
     "server": "nodemon server.js",
-    "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "investors": "npm start --prefix investors",
+    "dev": "concurrently \"npm run server\" \"npm run investors\""
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "config": "^3.3.9",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
