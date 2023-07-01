@@ -1,6 +1,7 @@
 const express = require("express");
 const connectDB = require("./config/db");
 const cors = require("cors");
+const router = require("./routes/user-routes");
 
 const app = express();
 
@@ -8,7 +9,7 @@ const app = express();
 connectDB();
 
 // Initialize middleware
-app.use(express.json({ extended: false }));
+app.use(express.json());
 app.use(
   cors({
     origin: "https://climax.herokuapp.com/",
@@ -17,7 +18,7 @@ app.use(
 );
 
 // Routes
-app.use("/api/users", require("./routes/api/users"));
+app.use("/api/user", router);
 
 // Serve static assets in production
 if (process.env.NODE_ENV === "production") {
