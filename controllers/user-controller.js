@@ -1,24 +1,14 @@
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const User = require("../model/User");
+const jwt = require('jsonwebtoken')
+const JWT_SECRET_KEY ="MyKey";
 
-const getAllUser = async(req,res,next) => {
-    let users;
-    try {
-        users = await User.find();
-    } catch (err) {
-        console.log(err)
-    }
-    if (!users) {
-        return res.status(404).json({ message: "No User Found"})
-    }
-    return res.status(200).json({users })
-}
 const signup = async(req,res,next) => {
     const {name,email,password} = req.body;
 
     let existingUser;
     try {
-        existingUser = await User.findOne({email})
+        existingUser = await User.findOne({email: email})
     } catch (err) {
        return console.log(err);
     }
@@ -70,9 +60,12 @@ const login = async(req,res,next) =>{
     if (!isMatch) {
       return res.status(400).json({ message: "Incorrect Password" });
     }
-    return res.status(200).json({message: "Login Successful"})
+    const token = jwt.sign({id: existingUser._id},JWT_SECRET_KEY, {
+       expiresIn: "1hr"
+      });
+    return res.status(200).json({message: "Login Successful", user:existingUser, token})
 
    
 }
 
-module.exports = {getAllUser, signup, login};
+module.exports = { signup, login};
