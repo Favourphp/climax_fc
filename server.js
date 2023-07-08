@@ -1,10 +1,10 @@
 const express = require("express");
 const router = require("./routes/user-routes");
 const mongoose =  require("mongoose")
-
+const cookieParser = require('cookie-parser')
 
 const app = express();
-
+app.use(cookieParser())
 // Connect to MongoDB
 mongoose.connect("mongodb+srv://favdevs:Fav1234@cluster0.biy2mm1.mongodb.net/04-STORE-API?retryWrites=true&w=majority", {useNewUrlParser: true,
 useUnifiedTopology: true})
